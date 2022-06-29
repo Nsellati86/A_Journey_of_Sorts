@@ -41,6 +41,43 @@ def initGlobals():
     game_over = False
 
 
+def bennysShop():
+    global player_inventory
+    global player_name
+    global this_area
+    global area_name
+
+    menu_prompt = ("\tAvailable commands:\n"
+                   "\t(talk) with Benny\n"
+                   "\t(accept) gift from Benny\n"
+                   "\t(exit) Benny's shop\n"
+                   "Enter command (use word in parenthesis):\n")
+
+    print("Welcome to Benny's Shop!\n")
+    cust_input = input(menu_prompt).strip().lower()[0]
+
+    while cust_input != 'exit':
+        if cust_input == 't':
+            print("\n\t'Hey Benny, I just wanted to pop in to say that I'm swinging through town real quick on my way to Larkin Castle to have a quick word with our new Lord Archie.")
+            print("\n\tIn case I don't get the chance to, I just wanted to say thank you for the long, fruitful partnership we had and for being such a good friend all of these years.'")
+            time.sleep(1)
+            print(f"\n\t\tNo sweat {player_name}, You are a stand up guy and you always gave me a good discount when I bought in bulk, but you've got that look in your eye my friend...")
+            time.sleep(1)
+            print("\n\t\tMake sure you take this gift before you leave. Something tells me that you are going to need it....")
+        elif cust_input == 'a':
+            print("\nBenny just gave you the Soundless-Boots! These will actually come very much in handy...In fact, it's doubtful that you can pull this off without them. Benny's the BEST!")
+            player_inventory.append("Soundless-Boots")
+            time.sleep(1)
+            print("\nYou put on your new boots, shake Benny's hand.")
+        elif cust_input == 'e':
+            print("\nYou exit Benny's store. You get back onto the road and continue on your journey of sorts. The path to Castle Larkin winds up the mountain.")
+            this_area = pathia[area_name]
+        else:
+            print("Invalid command.")
+
+        cust_input = input("Enter command:\n").strip().lower()[0]
+
+
 def move(path):
     global this_area
     global game_over
@@ -90,16 +127,12 @@ def move(path):
             time.sleep(1)
             print("\nNow that that is done, you should head over to the Village Convenience Shop to say farewell to your dearest friend and long-time purchaser of your goods, Benny.")
             time.sleep(1)
-            print("\n\t'Hey Benny, I wanted to pop in to say that I'm swinging through town real quick on my way to Larkin Castle to have a quick word with our new Lord Archie.")
-            print("\n\tIn case I don't get the chance to, I just wanted to say thank you for the long, fruitful partnership we had and for being such a good friend all of these years.'")
+            print("\nBenny is out front of his shop observing the comings and goings of the Village folk as he likes to do when his shop is empty.")
             time.sleep(1)
-            print(f"\n\t\tNo sweat {player_name}, You are a stand up guy and you always gave me a good discount when I bought in bulk, but you've got that look in your eye my friend...")
+            print(f"\n\t\tHey {player_name}, it's good to see you man. Whoa...wait a minute, you are giving off a certain kind of energy....hmm-mmm....")
             time.sleep(1)
-            print("\n\t\tI'm no fool and you look like a man on a mission so....take these as a gift from your pal Benny and I wish you the best of luck on your 'chat' with our Lord!")
-            print("\nBenny just gave you the Soundless-Boots! These will actually come very much in handy...In fact, I doubt you can pull this off without them. Benny's the BEST!")
-            player_inventory.append("Soundless-Boots")
-            print("\nYou put on your new boots, shake Benny's hand, and exit the store. You get back onto the road and continue on. The path to Castle Larkin winds up the mountain.")
-            this_area = pathia[area_name]
+            print("\n\t\tI'm no fool and you look like a man on a mission so....I actually have gift for you. Let's head over into the shop and chat for a quick sec!")
+            bennysShop()
 
         if area_name == "Forest":
             print("\nYou have been walking a short while on the path through Farlow Forest. You approach a looming wall of trees and brush that stretch for miles in either direction.")
@@ -108,3 +141,17 @@ def move(path):
             print("All you can do is wait for the inhabitants of this sacred, old forest to make contact with you. You don't know much, but you do know that the Forester Elves ")
             print("Value their home and their privacy. Hopefully you can convince them of your need to pass through and that you mean them no trouble.")
             time.sleep(1)
+
+
+def grab(item):
+    global this_area
+    global player_inventory
+
+    if this_area["Item"].lower() == item and not (this_area["Item"] in player_inventory):
+        player_inventory.append(this_area["Item"])
+        this_area["Item"] = ''
+    else:
+        print("That item is not here.")
+
+
+initGlobals()
