@@ -38,11 +38,11 @@ def initGlobals():
                    "Exits": {"b": "Mountain"}},
     }
 
-    this_area = pathia["Homestead"]
+    this_area = pathia["Home"]
     player_inventory = []
     game_over = False
     player_name = input("What is your character name going to be? >>> ")
-    print(f"Welcome to 'A Journey of Sorts' {player_name}!")
+    print(f"\nWelcome to 'A Journey of Sorts' {player_name}!")
 
 
 def move(path):
@@ -111,26 +111,26 @@ def move(path):
             print("All you can do is wait for the inhabitants of this sacred, old forest to make contact with you. You don't know much, but you do know that the Forester Elves")
             print("value their home and their privacy as fiercely as they respect honor and wit. Hopefully you can convince them of your need to pass and that you mean them no trouble.")
             time.sleep(1)
-            print("\nThe Captain of the border guard appears at the top of the gate and looks down upon you for a few seconds...")
-            print("\n\t\t'You there! What brings you so deep into Farlow Forest?'")
-            print("\n\t'I am on an important mission to quite frankly assassinate the new Lord Archibald who has seen fit to threaten my livelihood among his first acts as Lord!'")
-            print("Not sure if blurting out the complete and total truth was the smartest thing to do, but it's too late and now you await his response....")
+            print("\nThe Captain of the border guard, Captain Lucian, appears at the top of the gate and looks down upon you for a few seconds...")
+            print("\t\tCapt. Lucian: You there! What brings you so deep into Farlow Forest?'")
+            print("\n\t'I am on an important mission to quite frankly assassinate the new Lord Archibald who has seen fit to threaten my livelihood among his first acts as Lord!")
             time.sleep(1)
-            print("\n\t\t'Alright traveler, I thank you for your open honesty. If this is truly your purpose, then we are with you! That new asshat of a Lord has waged war upon")
-            print("\n\t\tour smaller woodland communities that are loyal to our Elven Lord, King Filarion Inakian. It is clear that Archibald's army are making their way here.")
-            print("\n\t\tYou may pass through our kingdom unharmed....... IF....you can guess our passkey phrase. If you do so correctly, we will even give you a parting gift.'")
+            print("Not sure if blurting out the complete and total truth was the smartest thing to do, but it's too late now. You await his response....")
+            time.sleep(1)
+            print("\n\t\tCapt. Lucian: Alright traveler, I thank you for your open honesty. If this is truly your purpose, then we are with you! That new asshat of a Lord has waged war")
+            print("\t\tupon our smaller woodland communities that are loyal to our Elven Lord, King Filarion Inakian. It is clear that Archibald's armies are slowly making their way here.")
+            print("\t\tYou may pass through our kingdom unharmed....... IF....you can guess our passkey phrase. If you do so correctly, we will even give you a passing gift.")
             time.sleep(1)
             player_input = input("\n\t\t'Do you agree? Or should I release the enchantment holding you in place, only to have you driven back the way you came? (Y/N)").lower()[0]
 
             if player_input == 'y':
                 guessPasskey()
             elif player_input == 'n':
-                print("Your feet have been freed. Now you are staring at a dozen spears, glinting in the sunlight, beckoning you to turn around and head back the way you came.")
+                print("\nYour feet have been freed. Now you are staring at a dozen spears, glinting in the sunlight, beckoning you to turn around and head back the way you came.")
                 time.sleep(1)
                 this_area = pathia["Bridge"]
             else:
-                print("Invalid input.")
-
+                print("Invalid input, please try again.")
 
 
 def grab(item):

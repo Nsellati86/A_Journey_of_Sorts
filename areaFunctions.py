@@ -76,61 +76,83 @@ def guessPasskey():
     global this_area
     global player_inventory
 
-    passkey = ['friend']
-
-    word = passkey
-    num_guesses = 10
-    hidden_word = '-' * len(word)
-    guess = 1
-
-    print("\n\t\t'You must guess the passkey if you wish to be granted passage. You will enter a letter, and if it is contained within the word, it will be revealed.")
-    print("\n\t\tYou will be given 10 chances to reveal all of the letters of the passkey. If you run out of guesses before you can reveal the passkey, then you shall not pass.")
+    print('\033[3m' + "\n\t\tCapt. Lucian: " + '\033[0m', end='')
+    print('\033[1m' + "You must guess the passkey if you wish to be granted passage. You will enter a letter, and if it is contained within the word, it will be revealed.")
+    print("\t\tYou will be given 10 chances to reveal all of the letters of the passkey. If you run out of guesses before you can reveal the passkey, then you shall not pass." + '\033[0m')
+    print()
     time.sleep(1)
 
-    while guess <= num_guesses and '-' in hidden_word:
-        print(hidden_word)
-        user_guess = input("Enter a character (guess #{}): ".format(guess))
+    guesses = []
+    wrongGuesses = 0
+    listOfGuesses = []
+    passkey = 'friend'
 
-        if len(user_guess) == 1:
-            num_occurrences = word.count(user_guess)
-            position = -1
+    guessed = "-" * len(passkey)
+    for x in range(len(passkey)):
 
-            for occurrence in range(num_occurrences):
-                position = word.find(user_guess, position + 1)
-                hidden_word = hidden_word[:position] + user_guess + hidden_word[position + 1:]
+        while wrongGuesses != guesses:
+            x = input("Passkey: %s  \nGuess a letter: " % guessed).lower()
 
-            guess += 1
+            if x in passkey:
+                print(x, "is in the passkey!")
+                listOfGuesses.append(x)
 
-    if not '-' in hidden_word:
-        print("\n\tThe passkey is {}".format(word))
-        time.sleep(1)
-        print("\n\t\t'Congratulations, You have guessed correctly! You have earned safe passage through the kingdom and may proceed on to Venifur Village! Also, to help aid you")
-        print("\n\t\ton this quest that we believe to be just and right, please accept this gift: '")
-        time.sleep(1)
-        print("\nYou have received: Protection-Potion! This will surely help you if it comes down to having to fight your way to or from the the completion of your ultimate goal!")
-        player_inventory.append("Protection-Potion")
-    else:
-        print("\nYou did not reveal the passkey and you now must turn around and go back the way you came! Maybe they will let you try again if you leave and come back?")
-        this_area = pathia["Bridge"]
+                new_guessed = ""
+                for index, char in enumerate(passkey):
+                    if char == x:
+                        new_guessed += x
+                    else:
+                        new_guessed += guessed[index]
+
+                guessed = new_guessed
+
+                if guessed == passkey:
+                    time.sleep(1)
+                    print("You have guessed the passkey!", end=' ')
+                    print("The word was %s" % passkey)
+                    print(
+                        "\n\t\tCaptain: Congratulations, You have guessed correctly! You have earned safe passage through the kingdom and may proceed on to Venifur Village!")
+                    print(
+                        "\t\tAlso, to aid you on this quest that we believe to be just and right, please accept this gift: ")
+                    time.sleep(1)
+                    print(
+                        "\nYou have received: Protection-Potion! This will surely help you if it comes down to having to fight your way to or from the the completion of your ultimate goal!")
+                    player_inventory.append("Protection-Potion")
+                    return True
+                else:
+                    print("Letters guessed so far:", listOfGuesses, "\n")
+
+            else:
+                print(x, "is not in the passkey.")
+                wrongGuesses += 1
+                print("Wrong guesses:", wrongGuesses)
+                listOfGuesses.append(x)
+                print("Letters guessed so far:", listOfGuesses, "\n")
+
+    print(*player_inventory, sep=", ")
+    print("You did not guess the passkey! you must turn around and go back the way you came. Maybe the Captain will let you try again if you come back?")
+    this_area = pathia["Bridge"]
+    return False
 
 
 def guessNumber():
     global player_inventory
     global this_area
 
-    gusNum = random.randrange(1, 600)
+    gusNum = random.randrange(1, 6)
     chances = 3
     guess = None
 
-    print("\n\t\tGus: 'Alrighty friend, if you want to cross the bridge, you will have to get past me. I am NOT super fun to try and get past, believe me.")
+    print('\033[3m' + "\n\t\tGus: ", end='' + '\033[0m')
+    print('\033[1m' + "Alrighty friend, if you want to cross the bridge, you will have to get past me. I am NOT super fun to try and get past, believe me.")
     print("\t\tYou have two options: Option (1): you can simply pay the toll, pass on by, and be on your merry way! Or..... Option (2): You can play my quick")
     print("\t\tgame and win a valuable prize along with passage to cross the bridge! The game is simple: you have three chances to guess the number I'm thinking")
-    print("\t\tof, a number between 1 and 5. So, what will it be? Option (1) or (2)?' (Be sure to enter the number only)")
+    print("\t\tof, a number between 1 and 5. So, what will it be? Option (1) or (2)? (Be sure to enter the number only)" + '\033[0m')
     option_choice = int(input("\t\t>>> "))
     time.sleep(1)
 
     if option_choice == 1:
-        print("\n\t\t'Well that's alright. The toll will run you 10 chits to cross, and have a merry day!")
+        print("\n\t\t'Well, that's alright. The toll will cost you 10 chits to cross, and have a merry day!")
         time.sleep(1)
         this_area = pathia["Forest"]
 
@@ -149,10 +171,10 @@ def guessNumber():
                 this_area = pathia["Forest"]
 
             elif guess != gusNum:
-                print("\t\tNot right, try again.")
+                print("\t\tNot the right number friend, try again.")
                 chances -= 1
+
             else:
                 print("Invalid option choice, please try again.")
-
-
-guessNumber()
+    else:
+        print("Invalid option choice, please enter one of only 2 choice integers.")
