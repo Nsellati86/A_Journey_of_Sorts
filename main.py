@@ -41,6 +41,8 @@ def initGlobals():
     this_area = pathia["Homestead"]
     player_inventory = []
     game_over = False
+    player_name = input("What is your character name going to be? >>> ")
+    print(f"Welcome to 'A Journey of Sorts' {player_name}!")
 
 
 def move(path):
