@@ -1,4 +1,5 @@
 import time
+import random
 
 pathia = {
     'Home': {"Name": "Homestead",
@@ -112,3 +113,46 @@ def guessPasskey():
         print("\nYou did not reveal the passkey and you now must turn around and go back the way you came! Maybe they will let you try again if you leave and come back?")
         this_area = pathia["Bridge"]
 
+
+def guessNumber():
+    global player_inventory
+    global this_area
+
+    gusNum = random.randrange(1, 600)
+    chances = 3
+    guess = None
+
+    print("\n\t\tGus: 'Alrighty friend, if you want to cross the bridge, you will have to get past me. I am NOT super fun to try and get past, believe me.")
+    print("\t\tYou have two options: Option (1): you can simply pay the toll, pass on by, and be on your merry way! Or..... Option (2): You can play my quick")
+    print("\t\tgame and win a valuable prize along with passage to cross the bridge! The game is simple: you have three chances to guess the number I'm thinking")
+    print("\t\tof, a number between 1 and 5. So, what will it be? Option (1) or (2)?' (Be sure to enter the number only)")
+    option_choice = int(input("\t\t>>> "))
+    time.sleep(1)
+
+    if option_choice == 1:
+        print("\n\t\t'Well that's alright. The toll will run you 10 chits to cross, and have a merry day!")
+        time.sleep(1)
+        this_area = pathia["Forest"]
+
+    elif option_choice == 2:
+        print("\n\t\tGus: Option 2? Good choice my friend.")
+        print("\t\tNow I'm thinking of a number between 1 and 5")
+
+        while guess != gusNum and chances > 0:
+            guess = int(input("\t\tTry to guess the number: "))
+
+            if guess == gusNum:
+                print("\t\tYou got it!")
+                time.sleep(1)
+                print("\nGus gave you the Obsurity-Cloak! Wow, this item will greatly come in handy! NICE!")
+                print("You put your new item into your backpack, and continue forth on you quest.")
+                this_area = pathia["Forest"]
+
+            elif guess != gusNum:
+                print("\t\tNot right, try again.")
+                chances -= 1
+            else:
+                print("Invalid option choice, please try again.")
+
+
+guessNumber()
