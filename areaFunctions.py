@@ -178,3 +178,35 @@ def guessNumber():
                 print("Invalid option choice, please try again.")
     else:
         print("Invalid option choice, please enter one of only 2 choice integers.")
+
+
+def startAssassination():
+    global game_over
+
+    print("\nLord Archibald wakes up from his slumber to see you standing over him about to plunge your Dagger into his heart! He immediately grabs the sword that he")
+    print("keeps next to his bed and meets your weapon with a high-pitched 'CLANG!!' just as you were about to end his life. Things have gotten a little more complicated now!")
+    time.sleep(1)
+    print("\n\t\tLord Archibald: " + '\033[91m' + "Who the hell are you and what the hell do you think you are doing in my room?!?!" + '\033[0m')
+    time.sleep(2)
+    print('\033[92m' + "\n\tI am a simple man who was threatened by you to lose all that I have left, and who has decided that Pathia will be better off without your tyrannical rule!" + '\033[0m')
+    time.sleep(2)
+    print("\n\t\tLord Archibald: " + '\033[91m' + "Clearly you want me dead then, well I will not make it easy for you. If you truly want to end me, come at me!!!" + '\033[0m')
+    time.sleep(2)
+    print("\nYou are both standing at opposite sides of the massive, ostentatious bedroom. There is a glint of determination in your eyes and a burning rage in Lord Archibald's...")
+    time.sleep(2)
+    print("For one moment, there is a silence and clarity that washes over your mind...and then the urge to strike.....You LUNGE at Lord Archibald! He mimics with less ferocity")
+    time.sleep(1)
+
+    for i in range(50):
+        for j in range(1000000):
+            pass
+        print(".", end='', flush=True)
+
+    print()
+    if len(player_inventory) == 5:
+        print("\nCongratulations! Your Dagger was fast and true and you pierced Lord Archibald's heart before he even realized what happened! He looks at you one last time,")
+        print("then his eyes darken, life leaves his body, and he slumps down onto the ground in a heap, never to rise again.")
+    else:
+        print("\nOh no, you did not have all five of the quest items to aid you in defeating Lord Archibald, perhaps time will reverse a bit and you will have a second chance")
+        print("to complete your mission; this time with everything you need to succeed!" + '\033[94m' + "Thanks for playing!" + '\033[0m')
+        game_over = True

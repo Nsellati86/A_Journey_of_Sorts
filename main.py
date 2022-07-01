@@ -1,5 +1,6 @@
 from areaFunctions import bennysShop
 from areaFunctions import guessPasskey
+from areaFunctions import startAssassination
 import time
 
 
@@ -41,6 +42,10 @@ def initGlobals():
     this_area = pathia["Home"]
     player_inventory = []
     game_over = False
+
+
+def showInstructions():
+
 
 
 def grab(item):
@@ -140,8 +145,8 @@ def move(path):
             
                 "In the untimely event of my death, I, {player_name}, wish that the entirety of my assets at the time of my passing, including my farmland, my livestock,
                  my home, and all possessions therein, be put up for auction exclusively to the benefit of the townsfolk of Venifur Village, Pathia. Any of my estate that is
-                 left over not claimed in auction shall be evenly distributed only among those that qualify as the poorest among the populace of this beautiful country of ours.
-                 ***** Specifications as to who can qualify for an even distribution of my left over estate filed with the town's Notary and confirmed by my lawyer *****
+                 left over not claimed in auction shall be evenly distributed only among those that qualify as the poorest among the populace of this beautiful country of ours."
+                 ***** Specifics as to who can qualify for an evenly distributed share of my remaining estate have been filed with the town's Notary and confirmed by my lawyer *****
                  
             ''')
             time.sleep(1)
@@ -149,7 +154,7 @@ def move(path):
             time.sleep(1)
             print("\nBenny is out front of his shop observing the comings and goings of the Village folk, as he likes to do while his shop is empty.")
             time.sleep(1)
-            print(f"\n\t\tOh shit, hey {player_name}! It's damn good to see you, man. Whoa...wait a minute, you're giving off a certain kind of energy....hmmmm....")
+            print(f"\n\t\tBenny: Oh shit, hey {player_name}! It's damn good to see you, man. Whoa...wait a minute, you're giving off a certain kind of energy....hmmmm....")
             time.sleep(1)
             print("\n\t\tI'm no fool and you look like a man on a mission so....shit. I actually have gift for you. Let's head over into the shop and chat for a quick sec!")
             bennysShop()
@@ -191,13 +196,51 @@ def gameLoop():
     print("\nWhat is your character name going to be?", end=' ')
     player_name = input(">>> ")
     print(f"\nWelcome to 'A Journey of Sorts' {player_name}!")
+    print("Prepare yourself for a " + '\033[92m' + "splendid journey" + '\033[0m' + " through the land of Pathia!")
 
     while not game_over:
 
         if this_area['Name'] == "Castle Larkin":
             area_name = this_area['Name']
             area_description = this_area['Description']
+            print(f"\nYou have entered {area_name}, you are as prepared as you can be. Make sure to trust your senses, stay quiet, stay focused, and do not hesitate.")
+            time.sleep(3)
+            print(f"\n{area_description}")
+            time.sleep(3)
+            print("\nYou move in and out of the shadows, making your way to Lord Archibald's bedroom. You take great care not to be discovered because that would bring")
+            print("you a whole heap of trouble in the form of palace guards, and then the large portion of Pathia's military that's stationed at the castle down upon your head.")
+            time.sleep(3)
+            print("\nYou have reached Archibald's bedroom, you quietly open the door, sneak in, and close it behind you. The Lord is fast asleep. You approach his bedside, pull")
+            print("out your Deepcuts_Dagger, raise it above your head, bring your focus in on his chest right above his heart, aaaaaaaaaaand..........")
+            time.sleep(3)
+            startAssassination()
+            continue
+
+        showStatus()
+        print("\nwhat would you like to do?", end=' ')
+        cmd = input(">>> ")
+        parseCmd(cmd)
+
+    print("Would you like to play again? (Y/N) ", end=' ')
+    play_again = input(">>> ")
+
+    if play_again.lower() == "y":
+        startGame()
+    elif play_again.lower == "n":
+        print('\033[91m' + "\nWe will see you next time for a Journey of Sorts!" + '\033[0m')
+        exit(0)
+    else:
+        print("\nInvalid inout, please try again.")
 
 
-initGlobals()
-gameLoop()
+def startGame():
+    initGlobals()
+    showInstructions()
+    gameLoop()
+
+
+pathia = {}
+this_area = {}
+player_inventory = []
+game_over = False
+startGame()
