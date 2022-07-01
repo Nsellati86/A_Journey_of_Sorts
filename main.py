@@ -41,8 +41,58 @@ def initGlobals():
     this_area = pathia["Home"]
     player_inventory = []
     game_over = False
-    player_name = input("What is your character name going to be? >>> ")
-    print(f"\nWelcome to 'A Journey of Sorts' {player_name}!")
+
+
+def grab(item):
+    global this_area
+    global player_inventory
+
+    if this_area["Item"].lower() == item and not (this_area["Item"] in player_inventory):
+        player_inventory.append(this_area["Item"])
+        this_area["Item"] = ''
+    else:
+        print("That item is not here.")
+
+
+def parseCmd(command):
+    l_cmd = command.lower()
+    valid_dir = ["f", "b", "forward", "forwards", "back", "backward", "backwards", "forth"]
+
+    if l_cmd in valid_dir:
+        move(l_cmd[0])
+    elif l_cmd.startswith("grab "):
+        item = l_cmd.split(' ')[1]
+        grab(item)
+
+
+def showStatus():
+    area_name = this_area['Name']
+    area_description = this_area['Description']
+    area_item = this_area['Item']
+
+    if area_item == '':
+        area_item = "nothing"
+
+    print(f"\n~~~~~~~~~~ You are in {area_name} ~~~~~~~~~~")
+    print(f"{area_description}")
+    print(f"In this area: {area_item}")
+    paths = ''
+    this_path = ''
+
+    for e in this_area["Exits"].keys():
+        if e == "f":
+            this_path = "forward"
+        if e == "b":
+            this_path = "backward"
+        paths += f"{this_path} "
+
+    for item in player_inventory:
+        print(item)
+
+    if len(player_inventory) == 6:
+        print("\n-------> You have a total of 6 quest items, you are ready to attempt to take out Lord Archibald. May luck be on your side!")
+
+    print(f"\n********** Possible paths are: {paths}")
 
 
 def move(path):
@@ -58,12 +108,12 @@ def move(path):
             player_choice = input("\nYou are about to head towards Castle Larkin, are you sure you have what you need before you proceed further? (Y/N): ")
             if player_choice.lower() == "n":
                 return
-            this_area = pathia[area_name]
+            this_area = pathia["Mountain"]
         else:
             print("\nInvalid choice, please try again.")
 
         if area_name == "Mountain":
-            print("\nYou have reached the mouth of a dark cave. You adorn your Obscurity Cloak and proceed inside slowly.")
+            print("\nYou have reached the mouth of a deep and dark cave. You muster your confidence and proceed inside slowly and quietly.")
             time.sleep(1)
             print("A few minutes in, you reach an enormous, sleeping troll of a particularly menacing looking type! You definitely do not want to wake it.....")
             time.sleep(1)
@@ -133,15 +183,21 @@ def move(path):
                 print("Invalid input, please try again.")
 
 
-def grab(item):
+def gameLoop():
     global this_area
     global player_inventory
+    global player_name
 
-    if this_area["Item"].lower() == item and not (this_area["Item"] in player_inventory):
-        player_inventory.append(this_area["Item"])
-        this_area["Item"] = ''
-    else:
-        print("That item is not here.")
+    print("\nWhat is your character name going to be?", end=' ')
+    player_name = input(">>> ")
+    print(f"\nWelcome to 'A Journey of Sorts' {player_name}!")
+
+    while not game_over:
+
+        if this_area['Name'] == "Castle Larkin":
+            area_name = this_area['Name']
+            area_description = this_area['Description']
 
 
 initGlobals()
+gameLoop()
