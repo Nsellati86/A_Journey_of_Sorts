@@ -4,6 +4,7 @@ from areaFunctions import startAssassination
 import time
 
 
+#FIXME Having trouble with movement
 def initGlobals():
 
     global pathia
@@ -14,7 +15,7 @@ def initGlobals():
 
     pathia = {
         'Home': {"Name": "Homestead",
-                 "Description": "A modest home, that you built with your own two hands. Big enough for three, but only occupied by you since the tragedy.",
+                 "Description": "A modest home that you built with your own two hands. Big enough for three, but only occupied by you since the tragedy.",
                  "Item": "Backpack",
                  "Exits": {"f": "Bridge"}},
         'Bridge': {"Name": "Woodley Bridge",
@@ -45,7 +46,55 @@ def initGlobals():
 
 
 def showInstructions():
+    print('\033[94m' + '''
+        Welcome to the land of Pathia. The year is 1292 and it is a time of turmoil since the death of the beloved Lord Lucian Larkin, with his Lordship having passed
+        to his son, the despicable Archibald. The newly ordained Lord Archibald is a selfish, celf-centered, and loathsome man that nobody respects or cares much for.
+        He cares naught for anyone or anything except himself and the ever-growing desire to acquire more wealth and more power no matter the cost.
+    ''' + '\033[0m')
+    time.sleep(2)
 
+    print('\033[94m' + '''
+        You are a solemn, simple, and good-hearted farmer who has worked and tilled his family land for as long as you can remember. Sadly, you have been on your own since
+        your wife and son were taken by the plague a few years back. It was a pain like no other, but you are strong-willed, and you were able to get past that tragedy and
+        move on with your life, despite having next to nothing to live for. You devote all of your time to the harvest since you live in a region where your annual climate 
+        does not yield a winter, harvest is year-round. You keep to yourself and do not bother anybody; you only travel to the village marketplace to sell the bulk of the 
+        fruits of your labor to your one and only friend and business associate Benny once a week so that you can pay your land's taxes every month.
+    ''' + '\033[0m')
+    time.sleep(2)
+
+    print('\033[94m' + '''
+        One day while working in your field, a representative of his Lordship approaches you with grave, potentially upsetting information; followed by a threat:
+    ''' + '\033[91m' + '''
+    
+                        "By decree of his Lord Archibald Larkin: all those who own farmland within his domain will receive a tax increase
+                        from 20% up to 85% which is to be paid by the first of every month in full. Any and all who do not wish to comply 
+                        or do not pay their new amount of due taxes in full on or before the set date will have their lands and assets
+                        seized and they will be thrown in jail without trial for a period of time no less that 10 years!"
+                        
+    ''' + '\033[0m' + '\033[32m' + '"This is outrageous!!!!!"' + '\033[0m' ''' you think to yourself. ''' + '\033[94m' + '''
+        
+        You decide that now is a good a time as any to embark on a quest to assassinate this piece-of-crap Lord and rid the land of his blatant tyranny.
+        You have nothing left to lose anyway and you relish the prospect of seeing your wife and son again in the next life.
+        You're getting tired of farming anyways.
+        
+        You head inside and have a hearty dinner before preparing for your Journey of Sorts in the morning. You set your backpack that holds your 
+        compass and map on the kitchen table so that you can grab and go when you are ready to embark! Lord Archibald.....I'm coming for you.  
+    ''' + '\033[0m')
+    time.sleep(1)
+
+    print('\033[36m' + '''
+                    Game instructions:
+                        Type the actions you wish to command the game to do.
+                        If you wish to take an item and put into your inventory:
+                            Type: "grab " + item
+                        if you wish to move your character between areas:
+                            Type: "forward" or "back" or "f" or "b"
+                        
+                    You must traverse through Pathia in order to confront the deplorable Lord Archibald.
+                    You will not succeed in your mission unless you have added all FIVE quest items to your
+                    inventory. Stay level-headed and keep your wits about you traveler! Good luck!!!
+    
+    ''' + '\033[0m')
 
 
 def grab(item):
@@ -59,15 +108,18 @@ def grab(item):
         print("That item is not here.")
 
 
+#FIXME Having trouble with movement
 def parseCmd(command):
     l_cmd = command.lower()
-    valid_dir = ["f", "b", "forward", "forwards", "back", "backward", "backwards", "forth"]
+    valid_directions = ["f", "b", "forward", "forwards", "forth", "back", "backward", "backwards"]
 
-    if l_cmd in valid_dir:
+    if l_cmd in valid_directions:
         move(l_cmd[0])
     elif l_cmd.startswith("grab "):
         item = l_cmd.split(' ')[1]
         grab(item)
+    else:
+        print("Invalid command, please try again.")
 
 
 def showStatus():
@@ -78,9 +130,9 @@ def showStatus():
     if area_item == '':
         area_item = "nothing"
 
-    print(f"\n~~~~~~~~~~ You are in {area_name} ~~~~~~~~~~")
+    print('\033[1m' + f"\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ You are in {area_name} ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + '\033[0m')
     print(f"{area_description}")
-    print(f"In this area: {area_item}")
+    print('\033[35m' + f"In this area: {area_item}" + '\033[0m')
     paths = ''
     this_path = ''
 
@@ -92,12 +144,12 @@ def showStatus():
         paths += f"{this_path} "
 
     for item in player_inventory:
-        print(item)
+        print(f"Current inventory: {item}")
 
-    if len(player_inventory) == 6:
-        print("\n-------> You have a total of 6 quest items, you are ready to attempt to take out Lord Archibald. May luck be on your side!")
+    if len(player_inventory) == 5:
+        print('\033[36m' + "\n-------> You have acquired all 5 quest items, you are ready to attempt to take out Lord Archibald. May luck be on your side!" + '\033[0m')
 
-    print(f"\n********** Possible paths are: {paths}")
+    print('\033[33m' + f"Possible paths are: {paths}" + '\033[0m')
 
 
 def move(path):
@@ -141,14 +193,14 @@ def move(path):
             print("\nYou have reached Venifur Village. You must first head over to the Notary to make sure your affairs are in order. You really have no choice!")
             time.sleep(1)
             print("\nYou spoke with the Notary and have filed your last will and testament, which states the following: ")
-            print(f'''
+            print('\033[3m' + f'''
             
                 "In the untimely event of my death, I, {player_name}, wish that the entirety of my assets at the time of my passing, including my farmland, my livestock,
                  my home, and all possessions therein, be put up for auction exclusively to the benefit of the townsfolk of Venifur Village, Pathia. Any of my estate that is
                  left over not claimed in auction shall be evenly distributed only among those that qualify as the poorest among the populace of this beautiful country of ours."
                  ***** Specifics as to who can qualify for an evenly distributed share of my remaining estate have been filed with the town's Notary and confirmed by my lawyer *****
                  
-            ''')
+            ''' + '\033[0m')
             time.sleep(1)
             print("\nNow that that is done, you should head over to the Village Convenience Shop to say farewell to your dearest friend and long-time purchaser of your goods, Benny.")
             time.sleep(1)
@@ -193,7 +245,7 @@ def gameLoop():
     global player_inventory
     global player_name
 
-    print("\nWhat is your character name going to be?", end=' ')
+    print("What is your character name going to be? (Type a first name only please) ", end=' ')
     player_name = input(">>> ")
     print(f"\nWelcome to 'A Journey of Sorts' {player_name}!")
     print("Prepare yourself for a " + '\033[92m' + "splendid journey" + '\033[0m' + " through the land of Pathia!")
@@ -217,9 +269,9 @@ def gameLoop():
             continue
 
         showStatus()
-        print("\nwhat would you like to do?", end=' ')
-        cmd = input(">>> ")
-        parseCmd(cmd)
+        print("\nWhat would you like to do?", end=' ')
+        command = input(">>> ")
+        parseCmd(command)
 
     print("Would you like to play again? (Y/N) ", end=' ')
     play_again = input(">>> ")

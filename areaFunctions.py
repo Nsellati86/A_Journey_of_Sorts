@@ -35,33 +35,34 @@ def bennysShop():
     global this_area
     global area_name
 
-    menu_prompt = ("\tAvailable commands:\n"
+    area_name = this_area['Name']
+    menu_prompt = ('\033[33m' + "\tAvailable commands:\n"
                    "\t(talk) with Benny\n"
                    "\t(accept) gift from Benny\n"
                    "\t(exit) Benny's shop\n"
-                   "Enter command (use the word, or it's first letter, in parenthesis): ")
+                   "Enter command (use the word, or it's first letter, in parenthesis): " + '\033[0m')
 
     print("Welcome to Benny's Shop!\n")
     cust_input = input(menu_prompt).strip().lower()[0]
 
     while cust_input != 'e':
         if cust_input == 't':
+            print('\033[32m' +
+                "\n\tYou: Hey Benny, I just wanted to pop in to say that I'm swinging through town real quick on my way to Larkin Castle to have a quick word with our new Lord Archie.")
             print(
-                "\n\t'Hey Benny, I just wanted to pop in to say that I'm swinging through town real quick on my way to Larkin Castle to have a quick word with our new Lord Archie.")
-            print(
-                "\n\tIn case I don't get the chance to, I just wanted to say thank you for the long, fruitful partnership we had and for being such a good friend all of these years.'")
+                "\tIn case I don't get the chance to, I just wanted to say thank you for the long, fruitful partnership we had and for being such a good friend all of these years.'" + '\033[0m')
             time.sleep(1)
-            print(
-                f"\n\t\tNo sweat {player_name}, You are a stand up guy and you always gave me a good discount when I bought in bulk, but you've got that look in your eye my friend...")
+            print('\033[33m' +
+                f"\n\t\tBenny: No sweat {player_name}, You are a stand up guy and you always gave me a good discount when I bought in bulk, but you've got that look in your eye my friend..." + '\033[0m')
             time.sleep(1)
-            print(
-                "\n\t\tMake sure you take this gift before you leave. Something tells me that you are going to need it....")
+            print('\033[33m' +
+                "\t\tMake sure you take this gift before you leave. Something tells me that you are going to need it...." + '\033[0m')
         elif cust_input == 'a':
             print(
                 "\nBenny just gave you the Soundless-Boots! These will actually come very much in handy...In fact, it's doubtful that you can pull this off without them. Benny's the BEST!")
             player_inventory.append("Soundless-Boots")
             time.sleep(1)
-            print("\nYou put on your new boots, shake Benny's hand.")
+            print("\nYou put on your new boots and shake Benny's hand.")
         elif cust_input == 'e':
             print(
                 "\nYou exit Benny's store. You get back onto the road and continue on your journey of sorts. The path to Castle Larkin winds up the mountain.")
@@ -76,9 +77,12 @@ def guessPasskey():
     global this_area
     global player_inventory
 
+    player_inventory = []
     print('\033[3m' + "\n\t\tCapt. Lucian: " + '\033[0m', end='')
-    print('\033[1m' + "You must guess the passkey if you wish to be granted passage. You will enter a letter, and if it is contained within the word, it will be revealed.")
-    print("\t\tYou will be given 10 chances to reveal all of the letters of the passkey. If you run out of guesses before you can reveal the passkey, then you shall not pass." + '\033[0m')
+    print('\033[1m' + '\033[94m' +
+          "You must guess the passkey if you wish to be granted passage. You will enter a letter, and if it is contained within the word, it will be revealed." + '\033[0m')
+    print('\033[1m' + '\033[94m' +
+          "\t\tYou will be given 10 chances to reveal all of the letters of the passkey. If you run out of guesses before you can reveal the passkey, then you shall not pass." + '\033[0m')
     print()
     time.sleep(1)
 
@@ -110,14 +114,16 @@ def guessPasskey():
                     time.sleep(1)
                     print("You have guessed the passkey!", end=' ')
                     print("The word was %s" % passkey)
-                    print(
-                        "\n\t\tCaptain: Congratulations, You have guessed correctly! You have earned safe passage through the kingdom and may proceed on to Venifur Village!")
-                    print(
-                        "\t\tAlso, to aid you on this quest that we believe to be just and right, please accept this gift: ")
+                    print('\033[3m' + "\n\t\tCapt. Lucian: " + '\033[0m', end=' ')
+                    print('\033[1m' + '\033[94m' +
+                        "\n\t\tCongratulations, You have guessed correctly! You have earned safe passage through the kingdom and may proceed on to Venifur Village!" + '\033[0m')
+                    print('\033[1m' + '\033[94m' +
+                        "\t\tAlso, to aid you on this quest that we believe to be just and right, please accept this gift: " + '\033[0m')
                     time.sleep(1)
-                    print(
-                        "\nYou have received: Protection-Potion! This will surely help you if it comes down to having to fight your way to or from the the completion of your ultimate goal!")
+                    print("\nYou have received: Protection-Potion! This will surely help you if it comes down to having to fight your way to or from the the completion of your ultimate goal!")
                     player_inventory.append("Protection-Potion")
+                    print("Current inventory: ", end=' ')
+                    print(*player_inventory, sep=", ")
                     return True
                 else:
                     print("Letters guessed so far:", listOfGuesses, "\n")
@@ -129,8 +135,7 @@ def guessPasskey():
                 listOfGuesses.append(x)
                 print("Letters guessed so far:", listOfGuesses, "\n")
 
-    print(*player_inventory, sep=", ")
-    print("You did not guess the passkey! you must turn around and go back the way you came. Maybe the Captain will let you try again if you come back?")
+    print("You did not guess the passkey! You must turn around and go back the way you came. Maybe the Captain will let you try again if you come back?")
     this_area = pathia["Bridge"]
     return False
 
@@ -168,6 +173,8 @@ def guessNumber():
                 time.sleep(1)
                 print("\nGus gave you the Obsurity-Cloak! Wow, this item will greatly come in handy! NICE!")
                 print("You put your new item into your backpack, and continue forth on you quest.")
+                print("Current inventory: ", end=' ')
+                print(*player_inventory, sep=", ")
                 this_area = pathia["Forest"]
 
             elif guess != gusNum:
@@ -207,6 +214,6 @@ def startAssassination():
         print("\nCongratulations! Your Dagger was fast and true and you pierced Lord Archibald's heart before he even realized what happened! He looks at you one last time,")
         print("then his eyes darken, life leaves his body, and he slumps down onto the ground in a heap, never to rise again.")
     else:
-        print("\nOh no, you did not have all five of the quest items to aid you in defeating Lord Archibald, perhaps time will reverse a bit and you will have a second chance")
-        print("to complete your mission; this time with everything you need to succeed!" + '\033[94m' + "Thanks for playing!" + '\033[0m')
+        print("\nOh no, you did not have all five of the quest items to aid you in defeating Lord Archibald! Perhaps time will reverse a bit and you will have a second chance")
+        print("to complete your mission; this time with everything you need to succeed! See you next time traveller." + '\033[94m' + "Thanks for playing!" + '\033[0m')
         game_over = True
